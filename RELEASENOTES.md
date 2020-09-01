@@ -21,9 +21,9 @@ While fallback or downgrading is common practice it was never supported due to S
 
 ## Supported Core versions
 
-This release will be supported from ESP8266/Arduino library Core version **2.6.3 + e64cb61** due to reported security and stability issues on previous Core version. This will also support gzipped binaries.
+This release will be supported from ESP8266/Arduino library Core version **2.7.2.1** due to reported security and stability issues on previous Core version. This will also support gzipped binaries.
 
-Although it might still compile on previous Core versions all support will be removed in the near future.
+Support of Core versions before 2.7.1 has been removed.
 
 ## Support of TLS
 
@@ -35,7 +35,7 @@ For initial configuration this release supports Webserver based **WifiManager** 
 
 ## Provided Binary Downloads
 
-The following binary downloads have been compiled with ESP8266/Arduino library core version **2.6.3 + e64cb61**.
+The following binary downloads have been compiled with ESP8266/Arduino library core version **2.7.2.1**.
 
 - **tasmota.bin** = The Tasmota version with most drivers. **RECOMMENDED RELEASE BINARY**
 - **tasmota-BG.bin** to **tasmota-TW.bin** = The Tasmota version in different languages.
@@ -44,6 +44,7 @@ The following binary downloads have been compiled with ESP8266/Arduino library c
 - **tasmota-sensors.bin** = The Sensors version adds more useful sensors.
 - **tasmota-ir** = The InfraRed Receiver and transmitter version allowing all available protocols provided by library IRremoteESP8266 but without most other features.
 - **tasmota-display.bin** = The Display version without Energy Monitoring but adds display support.
+- **tasmota-zbbridge.bin** = The dedicated Sonoff Zigbee Bridge version.
 - **tasmota-minimal.bin** = The Minimal version allows intermediate OTA uploads to support larger versions and does NOT change any persistent parameter. This version **should NOT be used for initial installation**.
 
 [List](MODULES.md) of embedded modules.
@@ -52,23 +53,21 @@ The following binary downloads have been compiled with ESP8266/Arduino library c
 
 ## Changelog
 
-### Version 8.2.0.3
+### Version 8.4.0.3
 
-- Change HM-10 sensor type detection and add features (#7962)
-- Change light scheme 2,3,4 cycle time speed from 24,48,72,... seconds to 4,6,12,24,36,48,... seconds (#8034)
-- Change remove floating point libs from IRAM
-- Change remove MQTT Info messages on restart for DeepSleep Wake (#8044)
-- Fix possible Relay toggle on (OTA) restart
-- Fix Zigbee sending wrong Sat value with Hue emulation
-- Add Zigbee command ``ZbRestore`` to restore device configuration dumped with ``ZbStatus 2``
-- Add Zigbee command ``ZbUnbind``
-- Add Zigbee command ``ZbBindState`` and ``manuf``attribute
-- Add commands ``CounterDebounceLow`` and ``CounterDebounceHigh`` to control debouncing (#8021)
-- Add command ``SetOption90 1`` to disable non-json MQTT messages (#8044)
-- Add command ``Sensor10 0/1/2`` to control BH1750 resolution - 0 = High (default), 1 = High2, 2 = Low (#8016)
-- Add command ``Sensor10 31..254`` to control BH1750 measurement time which defaults to 69 (#8016)
-- Add support for unreachable (unplugged) Zigbee devices in Philips Hue emulation and Alexa
-- Add support for 64x48 SSD1306 OLED (#6740)
-- Add support for up to four MQTT GroupTopics using the same optional Device Group names (#8014)
-- Add console command history (#7483, #8015)
-- Add support for longer template names
+- Remove support for 1-step upgrade from versions before 6.6.0.11 to versions after 8.4.0.1
+- Change references from http://thehackbox.org to http://ota.tasmota.com
+- Change White blend mode moved to using ``SetOption 105`` instead of ``RGBWWTable``
+- Fix ESP32 PWM range
+- Fix display power control (#9114)
+- Add command ``SetOption108 0/1`` to enable Teleinfo telemetry into Tasmota Energy MQTT (0) or Teleinfo only (1) - Add Zigbee better support for IKEA Motion Sensor
+- Add command ``SetOption109 1`` to force gen1 Alexa mode, for Echo Dot 2nd gen devices only
+- Add command ``Restart 2`` to halt system. Needs hardware reset or power cycle to restart (#9046)
+- Add ESP32 Analog input support for GPIO32 to GPIO39
+- Add Zigbee options to ``ZbSend`` ``Config`` and ``ReadCondig``
+- Add Zigbee web gui widget for Temp/Humidity/Pressure sensors
+- Add Zigbee web ui for power metering plugs
+- Add better config corruption recovery (#9046)
+- Add virtual CT for 4 channels lights, emulating a 5th channel
+- Add support for DYP ME007 ultrasonic distance sensor by Janusz Kostorz (#9113)
+- Add command ``PowerDelta1`` to ``PowerDelta3`` to trigger on up to three phases (#9134)

@@ -146,7 +146,7 @@ const char HTTP_BTN_MENU_PCF8574[] PROGMEM =
 const char HTTP_FORM_I2C_PCF8574_1[] PROGMEM =
   "<fieldset><legend><b>&nbsp;" D_PCF8574_PARAMETERS "&nbsp;</b></legend>"
   "<form method='get' action='" WEB_HANDLE_PCF8574 "'>"
-  "<p><input id='b1' name='b1' type='checkbox'%s><b>" D_INVERT_PORTS "</b></p><hr/>";
+  "<p><label><input id='b1' name='b1' type='checkbox'%s><b>" D_INVERT_PORTS "</b></label></p><hr/>";
 
 const char HTTP_FORM_I2C_PCF8574_2[] PROGMEM =
   "<tr><td><b>" D_DEVICE " %d " D_PORT " %d</b></td><td style='width:100px'><select id='i2cs%d' name='i2cs%d'>"
@@ -160,7 +160,7 @@ void HandlePcf8574(void)
 
   AddLog_P(LOG_LEVEL_DEBUG, PSTR(D_LOG_HTTP  D_CONFIGURE_PCF8574));
 
-  if (WebServer->hasArg("save")) {
+  if (Webserver->hasArg("save")) {
     Pcf8574SaveSettings();
     WebRestart(1);
     return;
@@ -193,9 +193,9 @@ void Pcf8574SaveSettings(void)
   char stemp[7];
   char tmp[100];
 
-  //AddLog_P(LOG_LEVEL_DEBUG, PSTR("PCF: Start working on Save arguements: inverted:%d")), WebServer->hasArg("b1");
+  //AddLog_P(LOG_LEVEL_DEBUG, PSTR("PCF: Start working on Save arguements: inverted:%d")), Webserver->hasArg("b1");
 
-  Settings.flag3.pcf8574_ports_inverted = WebServer->hasArg("b1");  // SetOption81 - Invert all ports on PCF8574 devices
+  Settings.flag3.pcf8574_ports_inverted = Webserver->hasArg("b1");  // SetOption81 - Invert all ports on PCF8574 devices
   for (byte idx = 0; idx < Pcf8574.max_devices; idx++) {
     byte count=0;
     byte n = Settings.pcf8574_config[idx];
@@ -248,7 +248,7 @@ bool Xdrv28(uint8_t function)
         WSContentSend_P(HTTP_BTN_MENU_PCF8574);
         break;
       case FUNC_WEB_ADD_HANDLER:
-        WebServer->on("/" WEB_HANDLE_PCF8574, HandlePcf8574);
+        Webserver->on("/" WEB_HANDLE_PCF8574, HandlePcf8574);
         break;
 #endif  // USE_WEBSERVER
     }
